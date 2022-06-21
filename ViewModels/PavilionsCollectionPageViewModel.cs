@@ -167,7 +167,7 @@ namespace KingIT.ViewModels
             }
             if (CurrentStatus != "Все" && !string.IsNullOrWhiteSpace(CurrentStatus))
                 statusPav = result.Where(x => x.status == CurrentStatus).ToList();
-            
+            //
             if (stagesPav != null)
                 result = result.Join(stagesPav, x => x.area, x => x.area, (x, y) => x).ToList();
             if (statusPav != null)
