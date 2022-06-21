@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище KingITModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeNumber" />
+          </Key>
+          <Property Name="employeeNumber" Type="int" Nullable="false" />
+          <Property Name="employeeSurname" Type="nvarchar" MaxLength="30" />
+          <Property Name="employeeFirstname" Type="nvarchar" MaxLength="30" />
+          <Property Name="employeeSecondname" Type="nvarchar" MaxLength="30" />
+          <Property Name="employeeLogin" Type="nvarchar" MaxLength="50" />
+          <Property Name="employeePassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="employeeRole" Type="nvarchar" MaxLength="20" />
+          <Property Name="phoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="sex" Type="nchar" MaxLength="1" />
+          <Property Name="photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Pavilions">
+          <Key>
+            <PropertyRef Name="pavilionNumber" />
+            <PropertyRef Name="shopCenterNumber" />
+          </Key>
+          <Property Name="pavilionNumber" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="shopCenterNumber" Type="int" Nullable="false" />
+          <Property Name="stage" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="area" Type="float" Nullable="false" />
+          <Property Name="costPerSquareMeter" Type="float" Nullable="false" />
+          <Property Name="valueAddedFactor" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rent">
+          <Key>
+            <PropertyRef Name="rentNumber" />
+          </Key>
+          <Property Name="rentNumber" Type="int" Nullable="false" />
+          <Property Name="pavilionNumber" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="shopCenterNumber" Type="int" Nullable="false" />
+          <Property Name="tenantNumber" Type="int" Nullable="false" />
+          <Property Name="emloyeeNumber" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="rentDateStart" Type="date" Nullable="false" />
+          <Property Name="rentDateStop" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShopCenters">
+          <Key>
+            <PropertyRef Name="shopCenterNumber" />
+          </Key>
+          <Property Name="shopCenterNumber" Type="int" Nullable="false" />
+          <Property Name="shopCenterName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="countOfPavilions" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="valueAddedFactor" Type="float" Nullable="false" />
+          <Property Name="numberOfStoreys" Type="int" Nullable="false" />
+          <Property Name="photo" Type="varbinary(max)" />
+          <Property Name="price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tenants">
+          <Key>
+            <PropertyRef Name="tenantNumber" />
+          </Key>
+          <Property Name="tenantNumber" Type="int" Nullable="false" />
+          <Property Name="tenantName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="adress" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Pavilions_ShopCenters">
+          <End Role="ShopCenters" Type="Self.ShopCenters" Multiplicity="1" />
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopCenters">
+              <PropertyRef Name="shopCenterNumber" />
+            </Principal>
+            <Dependent Role="Pavilions">
+              <PropertyRef Name="shopCenterNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="emloyeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Pavilions">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="pavilionNumber" />
+              <PropertyRef Name="shopCenterNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="pavilionNumber" />
+              <PropertyRef Name="shopCenterNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Tenants">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="tenantNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddDateRentThreeYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ChangeStatusOfRent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RemoveDateRentThreeYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище KingITModelContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rent" EntityType="Self.Rent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShopCenters" EntityType="Self.ShopCenters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tenants" EntityType="Self.Tenants" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pavilions_ShopCenters" Association="Self.FK_Pavilions_ShopCenters">
+            <End Role="ShopCenters" EntitySet="ShopCenters" />
+            <End Role="Pavilions" EntitySet="Pavilions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Employees" Association="Self.FK_Rent_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Pavilions" Association="Self.FK_Rent_Pavilions">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Tenants" Association="Self.FK_Rent_Tenants">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KingITModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeNumber" />
+          </Key>
+          <Property Name="employeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="employeeSurname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="employeeFirstname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="employeeSecondname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="employeeLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="employeePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="employeeRole" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Rent" Relationship="Self.FK_Rent_Employees" FromRole="Employees" ToRole="Rent" />
+        </EntityType>
+        <EntityType Name="Pavilions">
+          <Key>
+            <PropertyRef Name="pavilionNumber" />
+            <PropertyRef Name="shopCenterNumber" />
+          </Key>
+          <Property Name="pavilionNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shopCenterNumber" Type="Int32" Nullable="false" />
+          <Property Name="stage" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="area" Type="Double" Nullable="false" />
+          <Property Name="costPerSquareMeter" Type="Double" Nullable="false" />
+          <Property Name="valueAddedFactor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ShopCenters" Relationship="Self.FK_Pavilions_ShopCenters" FromRole="Pavilions" ToRole="ShopCenters" />
+          <NavigationProperty Name="Rent" Relationship="Self.FK_Rent_Pavilions" FromRole="Pavilions" ToRole="Rent" />
+        </EntityType>
+        <EntityType Name="Rent">
+          <Key>
+            <PropertyRef Name="rentNumber" />
+          </Key>
+          <Property Name="rentNumber" Type="Int32" Nullable="false" />
+          <Property Name="pavilionNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shopCenterNumber" Type="Int32" Nullable="false" />
+          <Property Name="tenantNumber" Type="Int32" Nullable="false" />
+          <Property Name="emloyeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rentDateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="rentDateStop" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Rent_Employees" FromRole="Rent" ToRole="Employees" />
+          <NavigationProperty Name="Pavilions" Relationship="Self.FK_Rent_Pavilions" FromRole="Rent" ToRole="Pavilions" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK_Rent_Tenants" FromRole="Rent" ToRole="Tenants" />
+        </EntityType>
+        <EntityType Name="ShopCenters">
+          <Key>
+            <PropertyRef Name="shopCenterNumber" />
+          </Key>
+          <Property Name="shopCenterNumber" Type="Int32" Nullable="false" />
+          <Property Name="shopCenterName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="valueAddedFactor" Type="Double" Nullable="false" />
+          <Property Name="numberOfStoreys" Type="Int32" Nullable="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Pavilions" Relationship="Self.FK_Pavilions_ShopCenters" FromRole="ShopCenters" ToRole="Pavilions" />
+          <Property Name="countOfPavilions" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tenants">
+          <Key>
+            <PropertyRef Name="tenantNumber" />
+          </Key>
+          <Property Name="tenantNumber" Type="Int32" Nullable="false" />
+          <Property Name="tenantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rent" Relationship="Self.FK_Rent_Tenants" FromRole="Tenants" ToRole="Rent" />
+        </EntityType>
+        <Association Name="FK_Rent_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="emloyeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pavilions_ShopCenters">
+          <End Role="ShopCenters" Type="Self.ShopCenters" Multiplicity="1" />
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopCenters">
+              <PropertyRef Name="shopCenterNumber" />
+            </Principal>
+            <Dependent Role="Pavilions">
+              <PropertyRef Name="shopCenterNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Pavilions">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="pavilionNumber" />
+              <PropertyRef Name="shopCenterNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="pavilionNumber" />
+              <PropertyRef Name="shopCenterNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Tenants">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="tenantNumber" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="tenantNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KingITEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Pavilions" EntityType="Self.Pavilions" />
+          <EntitySet Name="Rent" EntityType="Self.Rent" />
+          <EntitySet Name="ShopCenters" EntityType="Self.ShopCenters" />
+          <EntitySet Name="Tenants" EntityType="Self.Tenants" />
+          <AssociationSet Name="FK_Rent_Employees" Association="Self.FK_Rent_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pavilions_ShopCenters" Association="Self.FK_Pavilions_ShopCenters">
+            <End Role="ShopCenters" EntitySet="ShopCenters" />
+            <End Role="Pavilions" EntitySet="Pavilions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Pavilions" Association="Self.FK_Rent_Pavilions">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Tenants" Association="Self.FK_Rent_Tenants">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <FunctionImport Name="AddDateRentThreeYear" />
+          <FunctionImport Name="ChangeStatusOfRent" />
+          <FunctionImport Name="RemoveDateRentThreeYear" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(KingITModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(KingITModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище KingITModelContainer" CdmEntityContainer="KingITEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="KingITModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="employeeNumber" ColumnName="employeeNumber" />
+                <ScalarProperty Name="employeeSurname" ColumnName="employeeSurname" />
+                <ScalarProperty Name="employeeFirstname" ColumnName="employeeFirstname" />
+                <ScalarProperty Name="employeeSecondname" ColumnName="employeeSecondname" />
+                <ScalarProperty Name="employeeLogin" ColumnName="employeeLogin" />
+                <ScalarProperty Name="employeePassword" ColumnName="employeePassword" />
+                <ScalarProperty Name="employeeRole" ColumnName="employeeRole" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pavilions">
+            <EntityTypeMapping TypeName="KingITModel.Pavilions">
+              <MappingFragment StoreEntitySet="Pavilions">
+                <ScalarProperty Name="pavilionNumber" ColumnName="pavilionNumber" />
+                <ScalarProperty Name="shopCenterNumber" ColumnName="shopCenterNumber" />
+                <ScalarProperty Name="stage" ColumnName="stage" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="costPerSquareMeter" ColumnName="costPerSquareMeter" />
+                <ScalarProperty Name="valueAddedFactor" ColumnName="valueAddedFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rent">
+            <EntityTypeMapping TypeName="KingITModel.Rent">
+              <MappingFragment StoreEntitySet="Rent">
+                <ScalarProperty Name="rentNumber" ColumnName="rentNumber" />
+                <ScalarProperty Name="pavilionNumber" ColumnName="pavilionNumber" />
+                <ScalarProperty Name="shopCenterNumber" ColumnName="shopCenterNumber" />
+                <ScalarProperty Name="tenantNumber" ColumnName="tenantNumber" />
+                <ScalarProperty Name="emloyeeNumber" ColumnName="emloyeeNumber" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="rentDateStart" ColumnName="rentDateStart" />
+                <ScalarProperty Name="rentDateStop" ColumnName="rentDateStop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopCenters">
+            <EntityTypeMapping TypeName="KingITModel.ShopCenters">
+              <MappingFragment StoreEntitySet="ShopCenters">
+                <ScalarProperty Name="countOfPavilions" ColumnName="countOfPavilions" />
+                <ScalarProperty Name="shopCenterNumber" ColumnName="shopCenterNumber" />
+                <ScalarProperty Name="shopCenterName" ColumnName="shopCenterName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="valueAddedFactor" ColumnName="valueAddedFactor" />
+                <ScalarProperty Name="numberOfStoreys" ColumnName="numberOfStoreys" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tenants">
+            <EntityTypeMapping TypeName="KingITModel.Tenants">
+              <MappingFragment StoreEntitySet="Tenants">
+                <ScalarProperty Name="tenantNumber" ColumnName="tenantNumber" />
+                <ScalarProperty Name="tenantName" ColumnName="tenantName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddDateRentThreeYear" FunctionName="Хранилище KingITModel.AddDateRentThreeYear" />
+          <FunctionImportMapping FunctionImportName="ChangeStatusOfRent" FunctionName="Хранилище KingITModel.ChangeStatusOfRent" />
+          <FunctionImportMapping FunctionImportName="RemoveDateRentThreeYear" FunctionName="Хранилище KingITModel.RemoveDateRentThreeYear" />
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

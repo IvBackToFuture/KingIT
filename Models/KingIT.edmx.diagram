@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eb178407b6ff4fa0826c7e23d71f09a4" Name="Diagram1">
+        <EntityTypeShape EntityType="KingITModel.Employees" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KingITModel.Pavilions" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KingITModel.Rent" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KingITModel.ShopCenters" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KingITModel.Tenants" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="KingITModel.FK_Rent_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="KingITModel.FK_Pavilions_ShopCenters" ManuallyRouted="false" />
+        <AssociationConnector Association="KingITModel.FK_Rent_Pavilions" ManuallyRouted="false" />
+        <AssociationConnector Association="KingITModel.FK_Rent_Tenants" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

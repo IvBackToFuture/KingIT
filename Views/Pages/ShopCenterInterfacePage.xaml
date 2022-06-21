@@ -1,0 +1,51 @@
+﻿<Page x:Class="KingIT.Views.Pages.ShopCenterInterfacePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:dc="clr-namespace:KingIT.ViewModels"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KingIT.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ShopCenterInterfacePage">
+    <Page.DataContext>
+        <dc:ShopCenterInterfacePageViewModel/>
+    </Page.DataContext>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Command="{Binding LoadPictureCommand}">
+            <Button.Content>
+                <Grid>
+                    <TextBlock Text="Загрузить фото"/>
+                    <Image Source="{Binding CurrentPicture}"/>
+                </Grid>
+            </Button.Content>
+        </Button>
+        <!--<Button Content="Загрузить фото"/>-->
+        <StackPanel Grid.Row="1">
+            <UniformGrid Columns="2" Margin="50">
+                <TextBlock Text="Наименование"/>
+                <TextBox Text="{Binding CurrentShopCenter.shopCenterName}"/>
+                <TextBlock Text="КДС ТЦ"/>
+                <TextBox Text="{Binding CurrentShopCenter.valueAddedFactor}"/>
+                <TextBlock Text="Статус"/>
+                <ComboBox ItemsSource="{Binding StatusCollection}" SelectedItem="{Binding CurrentShopCenter.status}"/>
+                <TextBlock Text="Затраты на строительство"/>
+                <TextBox Text="{Binding CurrentShopCenter.price}"/>
+                <TextBlock Text="Город"/>
+                <ComboBox ItemsSource="{Binding CityCollection}" SelectedItem="{Binding CurrentShopCenter.city}"/>
+                <TextBlock Text="Этажность"/>
+                <TextBox Text="{Binding CurrentShopCenter.numberOfStoreys}"/>
+                <TextBlock Text="Кол-во павильонов"/>
+                <TextBox Text="{Binding CurrentShopCenter.countOfPavilions}"/>
+            </UniformGrid>
+            <UniformGrid Columns="2" Margin="50,0,50,0">
+                <Button Content="Интерфейс Список павильонов" Margin="0,0,25,0" Command="{Binding MoveOnPavilionsCollectionPageCommand}"/>
+                <Button Content="Сохранить" Margin="25,0,0,0" Command="{Binding SaveChangesCommand}"/>
+            </UniformGrid>
+        </StackPanel>
+    </Grid>
+</Page>

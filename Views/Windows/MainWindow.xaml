@@ -1,0 +1,30 @@
+﻿<Window x:Class="KingIT.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dc="clr-namespace:KingIT.ViewModels"
+        xmlns:local="clr-namespace:KingIT"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="640" Width="1280">
+    <Window.DataContext>
+        <dc:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="125"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="/KingIT;component/Resources/Picture.png"/>
+        <TextBlock Text="{Binding CurrentPage}" Grid.Column="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Button Grid.Column="2" Content="Назад" Margin="10,20,10,20" Command="{Binding ReturnOnPreviousPageCommand}"/>
+        <Frame Grid.Row="1" Content="{Binding CurrentPage}" Grid.ColumnSpan="3" NavigationUIVisibility="Hidden">
+            
+        </Frame>
+    </Grid>
+</Window>
