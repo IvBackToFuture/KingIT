@@ -1,0 +1,37 @@
+﻿<Page x:Class="KingIT.Views.Pages.PavilionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dc="clr-namespace:KingIT.ViewModels"
+      xmlns:local="clr-namespace:KingIT.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PavilionPage">
+    <Page.DataContext>
+        <dc:PavilionPageViewModel/>
+    </Page.DataContext>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="2" Margin="50">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Номер этажа"/>
+            <ComboBox ItemsSource="{Binding StagesCollection}" SelectedItem="{Binding CurrentPavilion.stage}" 
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Номер павильона"/>
+            <TextBox Text="{Binding CurrentPavilion.pavilionNumber}" IsEnabled="{Binding IsNewPavilion}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLength="5" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Площадь"/>
+            <TextBox Text="{Binding CurrentPavilion.area}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Статус"/>
+            <ComboBox ItemsSource="{Binding StatusCollection}" SelectedItem="{Binding CurrentPavilion.status}"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="КДС"/>
+            <TextBox Text="{Binding CurrentPavilion.valueAddedFactor}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Стоимость кв. м."/>
+            <TextBox Text="{Binding CurrentPavilion.costPerSquareMeter}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        </UniformGrid>
+        <Button Grid.Row="1" Content="Сохранить" Margin="50,25,50,25" Command="{Binding SaveChangesCommand}"/>
+    </Grid>
+</Page>

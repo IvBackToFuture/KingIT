@@ -14,7 +14,6 @@ namespace KingIT.ViewModels
 {
     class AutorizationPageViewModel : BaseViewModel
     {
-        
         #region Логин
 
         private string _Login;
@@ -165,6 +164,7 @@ namespace KingIT.ViewModels
                 if ((CountOfPoints > 0 || CaptchaUserText.ToUpper() == CaptchaText) && Employee != null)
                 {
                     Message = $"Вы вошли как user с фамилией: {Employee.employeeSurname}";
+                    MainWindowViewModel.InsertedEmployee = Employee.employeeNumber;
                     if (Employee.employeeRole == "Менеджер С")
                         MainWindowViewModel._CurrentViewModel.CurrentPage = new ManagerCPage();
                 }

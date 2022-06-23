@@ -111,7 +111,7 @@ namespace KingIT.ViewModels
             
             DeleteShopCenterCommand = new LambdaCommand(OnDeleteShopCenterCommandExecuted, CanDeleteShopCenterCommandExecute);
             MoveOnSCInterfaceCommand = new LambdaCommand(OnMoveOnSCInterfaceCommandExecuted, CanMoveOnSCInterfaceCommandExecute);
-            MoveOnSCInterfaceWithCreateNewCommand = new LambdaCommand(OnMoveOnSCInterfaceCommandExecuted);
+            MoveOnSCInterfaceWithCreateNewCommand = new LambdaCommand(OnMoveOnSCInterfaceWithCreateNewCommandExecuted);
         }
 
         #region Команда удаления ТЦ
@@ -139,6 +139,11 @@ namespace KingIT.ViewModels
         }
 
         public ICommand MoveOnSCInterfaceWithCreateNewCommand { get; }
+        private void OnMoveOnSCInterfaceWithCreateNewCommandExecuted(object d)
+        {
+            MainWindowViewModel._CurrentViewModel.CurrentPage = new ShopCenterInterfacePage();
+            (MainWindowViewModel._CurrentViewModel.CurrentPage.DataContext as ShopCenterInterfacePageViewModel).SetCurrentShopCenter(null);
+        }
 
         #endregion
     }

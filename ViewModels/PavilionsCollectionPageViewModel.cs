@@ -1,6 +1,7 @@
 ﻿using KingIT.Infrastructure;
 using KingIT.Models;
 using KingIT.ViewModels.Base;
+using KingIT.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -185,13 +186,14 @@ namespace KingIT.ViewModels
 
             DeletePavilionsCommand = new LambdaCommand(OnDeletePavilionsCommandExecuted, CanDeletePavilionsCommandExecute);
             MoveOnPavilionInterfaceCommand = new LambdaCommand(OnMoveOnPavilionInterfaceCommandExecuted, CanMoveOnPavilionInterfaceCommandExecute);
-            MoveOnPavilionInterfaceWithCreateNewCommand = new LambdaCommand(OnMoveOnPavilionInterfaceCommandExecuted);
+            MoveOnPavilionInterfaceWithCreateNewCommand = new LambdaCommand(OnMoveOnPavilionInterfaceWithCreateNewCommandExecuted);
+            RentPavilionsCommand = new LambdaCommand(OnRentPavilionsCommandExecuted, CanRentPavilionsCommandExecute);
         }
 
         #region Команда удаления павильона
 
         public ICommand DeletePavilionsCommand { get; }
-        private bool CanDeletePavilionsCommandExecute(object d) => CurrentPavilions != null;
+        private bool CanDeletePavilionsCommandExecute(object d) => CurrentPavilions != null && CurrentPavilions.status != "Забронирован" && CurrentPavilions.status != "Арендован";
         private void OnDeletePavilionsCommandExecuted(object d)
         {
             CurrentPavilions.status = "Удален";
@@ -204,15 +206,31 @@ namespace KingIT.ViewModels
         #region Команда перехода к интерфейсу павильона
 
         public ICommand MoveOnPavilionInterfaceCommand { get; }
-        private bool CanMoveOnPavilionInterfaceCommandExecute(object d) => CurrentPavilions != null;
+        private bool CanMoveOnPavilionInterfaceCommandExecute(object d) => CurrentPavilions != null && CurrentPavilions.status != "Забронирован" && CurrentPavilions.status != "Арендован";
         private void OnMoveOnPavilionInterfaceCommandExecuted(object d)
         {
-            //Переход к интерфейсу выбранного ТЦ
-            //MainWindowViewModel._CurrentViewModel.CurrentPage = new ShopCenterInterfacePage();
-            //(MainWindowViewModel._CurrentViewModel.CurrentPage.DataContext as ShopCenterInterfacePageViewModel).SetCurrentShopCenter(CurrentShopCenters);
+            MainWindowViewModel._CurrentViewModel.CurrentPage = new PavilionPage();
+            (MainWindowViewModel._CurrentViewModel.CurrentPage.DataContext as PavilionPageViewModel).SetCurrentPavilion(CurrentPavilions, CurrentShopCenter);
         }
 
         public ICommand MoveOnPavilionInterfaceWithCreateNewCommand { get; }
+        private void OnMoveOnPavilionInterfaceWithCreateNewCommandExecuted(object d)
+        {
+            MainWindowViewModel._CurrentViewModel.CurrentPage = new PavilionPage();
+            (MainWindowViewModel._CurrentViewModel.CurrentPage.DataContext as PavilionPageViewModel).SetCurrentPavilion(null, CurrentShopCenter);
+        }
+
+        #endregion
+
+        #region Команда перехода к аренде павильона
+
+        public ICommand RentPavilionsCommand { get; }
+        private bool CanRentPavilionsCommandExecute(object d) => CurrentPavilions != null;
+        private void OnRentPavilionsCommandExecuted(object d)
+        {
+            MainWindowViewModel._CurrentViewModel.CurrentPage = new RentPavilionPage();
+            (MainWindowViewModel._CurrentViewModel.CurrentPage.DataContext as RentPavilionPageViewModel).SetPavilion(CurrentPavilions);
+        }
 
         #endregion
     }

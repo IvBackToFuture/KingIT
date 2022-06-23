@@ -21,13 +21,16 @@
             <TextBlock Text="Этаж" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Text="Площадь" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Text="Статус" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Content="Удалить" Command="{Binding DeletePavilionsCommand}"/>
+            <UniformGrid Rows="2">
+                <Button Content="Арендовать" Command="{Binding RentPavilionsCommand}"/>
+                <Button Content="Удалить" Command="{Binding DeletePavilionsCommand}"/>
+            </UniformGrid>
             <ComboBox ItemsSource="{Binding StagesList}" SelectedItem="{Binding CurrentStages}" SelectedIndex="0"/>
             <UniformGrid Columns="4">
                 <TextBlock Text="От" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Text="{Binding FromArea, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <TextBox Text="{Binding FromArea, UpdateSourceTrigger=PropertyChanged, StringFormat=F}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <TextBlock Text="До" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Text="{Binding ToArea, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <TextBox Text="{Binding ToArea, UpdateSourceTrigger=PropertyChanged, StringFormat=F}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             </UniformGrid>
             <ComboBox ItemsSource="{Binding StatusList}" SelectedItem="{Binding CurrentStatus}" SelectedIndex="0"/>
             <UniformGrid Columns="1">

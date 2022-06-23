@@ -19,7 +19,11 @@ namespace KingIT.Models
         {
             this.Rent = new HashSet<Rent>();
         }
-    
+
+        public override string ToString()
+        {
+            return this.tenantName;
+        }
         public int tenantNumber { get; set; }
         public string tenantName { get; set; }
         public string phoneNumber { get; set; }

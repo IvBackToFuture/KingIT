@@ -81,8 +81,9 @@ namespace KingIT.ViewModels
             }
             else
             {
-                CurrentShopCenter = new ShopCenters() { shopCenterNumber = KingITEntities.GetContext().ShopCenters.Max(x => x.shopCenterNumber) + 1 };
+                CurrentShopCenter = new ShopCenters();
                 IsNewShopCenter = true;
+                CurrentPicture = null;
             }
             CurrentShopCenterID = CurrentShopCenter.shopCenterNumber;
         }
@@ -113,6 +114,7 @@ namespace KingIT.ViewModels
         private void OnSaveChangesCommandExecuted(object d)
         {
             SaveCahangesShopCenter();
+            MessageBox.Show("Сохранено");
         }
 
         #endregion
@@ -138,6 +140,7 @@ namespace KingIT.ViewModels
         {
             if (IsNewShopCenter)
             {
+                CurrentShopCenter.shopCenterNumber = KingITEntities.GetContext().ShopCenters.Max(x => x.shopCenterNumber) + 1;
                 KingITEntities.GetContext().ShopCenters.Add(CurrentShopCenter);
                 IsNewShopCenter = false;
             }
@@ -149,7 +152,7 @@ namespace KingIT.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.InnerException.Message);
                 //KingITEntities.GetContext().ChangeTracker.Entries().Where(x => x.State == System.Data.Entity.EntityState.Modified).ToList().ForEach(x => { x.CurrentValues.SetValues(x.OriginalValues); x.State = System.Data.Entity.EntityState.Unchanged; });
                 KingITEntities.GetContext().Entry(CurrentShopCenter).Reload();
                 return false;

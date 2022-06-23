@@ -12,6 +12,12 @@ namespace KingIT.ViewModels
 {
     class MainWindowViewModel : BaseViewModel
     {
+        #region Номер вошедшего пользователя
+
+        public static int InsertedEmployee;
+
+        #endregion
+
         #region Текущая страница
 
         private Page _CurrentPage;

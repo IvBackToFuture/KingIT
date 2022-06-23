@@ -23,7 +23,7 @@ namespace KingIT.Models
         }
 
         private static KingITEntities _context;
-        
+
         public static KingITEntities GetContext()
         {
             if (_context == null)
@@ -41,6 +41,7 @@ namespace KingIT.Models
         public virtual DbSet<Rent> Rent { get; set; }
         public virtual DbSet<ShopCenters> ShopCenters { get; set; }
         public virtual DbSet<Tenants> Tenants { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual int AddDateRentThreeYear()
         {
@@ -158,6 +159,142 @@ namespace KingIT.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int RentOrBookPavilionInMall(Nullable<bool> status_action, string pavilion_number, Nullable<long> mall_id, Nullable<System.DateTime> start_date, Nullable<System.DateTime> end_date, Nullable<long> tenant_id, Nullable<long> employee_id)
+        {
+            var status_actionParameter = status_action.HasValue ?
+                new ObjectParameter("status_action", status_action) :
+                new ObjectParameter("status_action", typeof(bool));
+    
+            var pavilion_numberParameter = pavilion_number != null ?
+                new ObjectParameter("pavilion_number", pavilion_number) :
+                new ObjectParameter("pavilion_number", typeof(string));
+    
+            var mall_idParameter = mall_id.HasValue ?
+                new ObjectParameter("mall_id", mall_id) :
+                new ObjectParameter("mall_id", typeof(long));
+    
+            var start_dateParameter = start_date.HasValue ?
+                new ObjectParameter("start_date", start_date) :
+                new ObjectParameter("start_date", typeof(System.DateTime));
+    
+            var end_dateParameter = end_date.HasValue ?
+                new ObjectParameter("end_date", end_date) :
+                new ObjectParameter("end_date", typeof(System.DateTime));
+    
+            var tenant_idParameter = tenant_id.HasValue ?
+                new ObjectParameter("tenant_id", tenant_id) :
+                new ObjectParameter("tenant_id", typeof(long));
+    
+            var employee_idParameter = employee_id.HasValue ?
+                new ObjectParameter("employee_id", employee_id) :
+                new ObjectParameter("employee_id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RentOrBookPavilionInMall", status_actionParameter, pavilion_numberParameter, mall_idParameter, start_dateParameter, end_dateParameter, tenant_idParameter, employee_idParameter);
+        }
+    
+        public virtual int sp_alterdiagram1(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram1", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram1(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram1", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition1_Result> sp_helpdiagramdefinition1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition1_Result>("sp_helpdiagramdefinition1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams1_Result> sp_helpdiagrams1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams1_Result>("sp_helpdiagrams1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram1(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram1", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams1");
         }
     }
 }

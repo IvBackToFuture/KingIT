@@ -97,10 +97,19 @@
     <Compile Include="Models\ShopCenters.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition1_Result.cs">
+      <DependentUpon>KingIT.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagrams1_Result.cs">
+      <DependentUpon>KingIT.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>KingIT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tenants.cs">
@@ -116,7 +125,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\PavilionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\PavilionsCollectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\RentPavilionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,7 +151,9 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ManagerCPageViewModel.cs" />
+    <Compile Include="ViewModels\PavilionPageViewModel.cs" />
     <Compile Include="ViewModels\PavilionsCollectionPageViewModel.cs" />
+    <Compile Include="ViewModels\RentPavilionPageViewModel.cs" />
     <Compile Include="ViewModels\ShopCenterInterfacePageViewModel.cs" />
     <Compile Include="Views\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
@@ -142,8 +161,14 @@
     <Compile Include="Views\Pages\ManagerCPage.xaml.cs">
       <DependentUpon>ManagerCPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\PavilionPage.xaml.cs">
+      <DependentUpon>PavilionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\PavilionsCollectionPage.xaml.cs">
       <DependentUpon>PavilionsCollectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\RentPavilionPage.xaml.cs">
+      <DependentUpon>RentPavilionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\ShopCenterInterfacePage.xaml.cs">
       <DependentUpon>ShopCenterInterfacePage.xaml</DependentUpon>
