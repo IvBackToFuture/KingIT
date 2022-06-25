@@ -1,0 +1,42 @@
+﻿<Page x:Class="KingIT.Views.Pages.ArendatorsCollectionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:dc="clr-namespace:KingIT.ViewModels"
+      xmlns:local="clr-namespace:KingIT.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ArendatorsCollectionPage">
+    <Page.DataContext>
+        <dc:ArendatorsCollectionPageViewModel/>
+    </Page.DataContext>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <UniformGrid>
+            <TextBlock Text="Поиск по имени:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Content="Редактировать" Command="{Binding UpdateArendatorCommand}"/>
+            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="Добавить" Command="{Binding AddNewArendatorCommmand}"/>
+        </UniformGrid>
+        <ListBox Grid.Row="1" ItemsSource="{Binding TenantsCollection}" SelectedItem="{Binding CurrentTenant}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding tenantName}"/>
+                        <TextBlock Text="{Binding adress}"/>
+                        <TextBlock Text="{Binding phoneNumber}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

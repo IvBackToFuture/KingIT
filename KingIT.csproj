@@ -115,9 +115,23 @@
     <Compile Include="Models\Tenants.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ArendatorPageViewModel.cs" />
+    <Compile Include="ViewModels\ArendatorsCollectionPageViewModel.cs" />
     <Compile Include="ViewModels\AutorizationPageViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Page Include="Views\Pages\ArendatorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ArendatorsCollectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AutorizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ManagerAChoosenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,6 +155,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\StatOfShopCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -150,13 +168,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ManagerAChoosenPageViewModel.cs" />
     <Compile Include="ViewModels\ManagerCPageViewModel.cs" />
     <Compile Include="ViewModels\PavilionPageViewModel.cs" />
     <Compile Include="ViewModels\PavilionsCollectionPageViewModel.cs" />
     <Compile Include="ViewModels\RentPavilionPageViewModel.cs" />
     <Compile Include="ViewModels\ShopCenterInterfacePageViewModel.cs" />
+    <Compile Include="ViewModels\StatOfShopCenterPageViewModel.cs" />
+    <Compile Include="Views\Pages\ArendatorPage.xaml.cs">
+      <DependentUpon>ArendatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ArendatorsCollectionPage.xaml.cs">
+      <DependentUpon>ArendatorsCollectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ManagerAChoosenPage.xaml.cs">
+      <DependentUpon>ManagerAChoosenPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\ManagerCPage.xaml.cs">
       <DependentUpon>ManagerCPage.xaml</DependentUpon>
@@ -172,6 +201,9 @@
     </Compile>
     <Compile Include="Views\Pages\ShopCenterInterfacePage.xaml.cs">
       <DependentUpon>ShopCenterInterfacePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\StatOfShopCenterPage.xaml.cs">
+      <DependentUpon>StatOfShopCenterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

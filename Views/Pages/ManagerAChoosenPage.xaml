@@ -1,0 +1,30 @@
+﻿<Page x:Class="KingIT.Views.Pages.ManagerAChoosenPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dc="clr-namespace:KingIT.ViewModels"
+      xmlns:local="clr-namespace:KingIT.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagerAChoosenPage">
+    <Page.DataContext>
+        <dc:ManagerAChoosenPageViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <UniformGrid Rows="2" Grid.Column="1" Grid.Row="1">
+            <Button Margin="20,20,20,10" Content="Арендаторы" Command="{Binding MoveOnArendatorsPageCommand}"/>
+            <Button Margin="20,10,20,20" Content="Статистика" Command="{Binding MoveOnStatOfShopCenterPageCommand}"/>
+        </UniformGrid>
+    </Grid>
+</Page>

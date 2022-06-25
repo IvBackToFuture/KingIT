@@ -142,8 +142,8 @@ namespace KingIT.ViewModels
 
         public AutorizationPageViewModel()
         {
-            Login = "Adam@gmai.com";
-            Password = "7SP9CV";
+            Login = "Vladlena@gmai.com";
+            Password = "07i7Lb";
             CountOfPoints = 3;
             CaptchaImage = new System.Windows.Controls.Image() { Width = 350, Height = 80 };
             CaptchaVisibility = System.Windows.Visibility.Hidden;
@@ -167,6 +167,8 @@ namespace KingIT.ViewModels
                     MainWindowViewModel.InsertedEmployee = Employee.employeeNumber;
                     if (Employee.employeeRole == "Менеджер С")
                         MainWindowViewModel._CurrentViewModel.CurrentPage = new ManagerCPage();
+                    if (Employee.employeeRole == "Менеджер А")
+                        MainWindowViewModel._CurrentViewModel.CurrentPage = new ManagerAChoosenPage();
                 }
                 else if (Employee == null)
                     Message = "Неверный логин или пароль";
