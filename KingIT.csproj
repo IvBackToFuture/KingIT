@@ -109,6 +109,9 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatOfTTS_Result.cs">
+      <DependentUpon>KingIT.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>KingIT.tt</DependentUpon>
     </Compile>

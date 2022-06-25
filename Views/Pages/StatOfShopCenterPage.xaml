@@ -2,13 +2,36 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:dc="clr-namespace:KingIT.ViewModels"
       xmlns:local="clr-namespace:KingIT.Views.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StatOfShopCenterPage">
-
-    <Grid>
-        
+    <Page.DataContext>
+        <dc:StatOfShopCenterPageViewModel/>
+    </Page.DataContext>
+    <Grid Background="White">
+        <UniformGrid Columns="2" Margin="50">
+            <UniformGrid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+                </Style>
+            </UniformGrid.Resources>
+            <TextBlock Text="Название"/>
+            <ComboBox ItemsSource="{Binding ShopCentersCollection}" SelectedItem="{Binding CurrentShopCenter}" DisplayMemberPath="shopCenterName" Height="25"/>
+            <TextBlock Text="Город"/>
+            <TextBlock Text="{Binding StatOfTTs.city}"/>
+            <TextBlock Text="Кол-во павильонов готовых к аренде"/>
+            <TextBlock Text="{Binding StatOfTTs.CountOfReadyPav}"/>
+            <TextBlock Text="Максимальное кол-во павильонов"/>
+            <TextBlock Text="{Binding StatOfTTs.countOfPavilions}"/>
+            <TextBlock Text="Кол-во сданных павильонов" />
+            <TextBlock Text="{Binding StatOfTTs.CountOfSentPav}"/>
+            <TextBlock Text="Общая площадь павильонов готовых к аренде"/>
+            <TextBlock Text="{Binding StatOfTTs.SumAllArea}"/>
+            <TextBlock Text="Средняя стоимость аренды кв.м."/>
+            <TextBlock Text="{Binding StatOfTTs.AvgOfCostPerSquareMetr}"/>
+        </UniformGrid>
     </Grid>
 </Page>

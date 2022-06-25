@@ -172,6 +172,9 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="StatOfTTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="numberTTS" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="Хранилище KingITModelContainer">
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
@@ -417,6 +420,12 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams1" />
+          <FunctionImport Name="StatOfTTS" ReturnType="Collection(KingITModel.StatOfTTS_Result)">
+            <Parameter Name="numberTTS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetStatOfTTS" ReturnType="Collection(KingITModel.StatOfTTS_Result)">
+            <Parameter Name="numberTTS" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -449,6 +458,15 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="StatOfTTS_Result">
+          <Property Type="String" Name="shopCenterName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="CountOfReadyPav" Nullable="true" />
+          <Property Type="Int32" Name="countOfPavilions" Nullable="true" />
+          <Property Type="Int32" Name="CountOfSentPav" Nullable="true" />
+          <Property Type="Double" Name="SumAllArea" Nullable="true" />
+          <Property Type="Double" Name="AvgOfCostPerSquareMetr" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -563,6 +581,32 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram1" FunctionName="Хранилище KingITModel.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams1" FunctionName="Хранилище KingITModel.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="StatOfTTS" FunctionName="Хранилище KingITModel.StatOfTTS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KingITModel.StatOfTTS_Result">
+                <ScalarProperty Name="shopCenterName" ColumnName="shopCenterName" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="CountOfReadyPav" ColumnName="CountOfReadyPav" />
+                <ScalarProperty Name="countOfPavilions" ColumnName="countOfPavilions" />
+                <ScalarProperty Name="CountOfSentPav" ColumnName="CountOfSentPav" />
+                <ScalarProperty Name="SumAllArea" ColumnName="SumAllArea" />
+                <ScalarProperty Name="AvgOfCostPerSquareMetr" ColumnName="AvgOfCostPerSquareMetr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStatOfTTS" FunctionName="Хранилище KingITModel.StatOfTTS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KingITModel.StatOfTTS_Result">
+                <ScalarProperty Name="shopCenterName" ColumnName="shopCenterName" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="CountOfReadyPav" ColumnName="CountOfReadyPav" />
+                <ScalarProperty Name="countOfPavilions" ColumnName="countOfPavilions" />
+                <ScalarProperty Name="CountOfSentPav" ColumnName="CountOfSentPav" />
+                <ScalarProperty Name="SumAllArea" ColumnName="SumAllArea" />
+                <ScalarProperty Name="AvgOfCostPerSquareMetr" ColumnName="AvgOfCostPerSquareMetr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -10,22 +10,15 @@
 namespace KingIT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tenants
+    public partial class StatOfTTS_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tenants()
-        {
-            this.Rent = new HashSet<Rent>();
-        }
-    
-        public int tenantNumber { get; set; }
-        public string tenantName { get; set; }
-        public string phoneNumber { get; set; }
-        public string adress { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rent> Rent { get; set; }
+        public string shopCenterName { get; set; }
+        public string city { get; set; }
+        public Nullable<int> CountOfReadyPav { get; set; }
+        public Nullable<int> countOfPavilions { get; set; }
+        public Nullable<int> CountOfSentPav { get; set; }
+        public Nullable<double> SumAllArea { get; set; }
+        public Nullable<double> AvgOfCostPerSquareMetr { get; set; }
     }
 }

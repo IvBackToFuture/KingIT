@@ -24,5 +24,10 @@ namespace KingIT.Views.Pages
         {
             InitializeComponent();
         }
+
+        public override string ToString()
+        {
+            return "Интерфейс Статистика по торговому центру";
+        }
     }
 }

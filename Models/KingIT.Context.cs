@@ -23,7 +23,6 @@ namespace KingIT.Models
         }
 
         private static KingITEntities _context;
-
         public static KingITEntities GetContext()
         {
             if (_context == null)
@@ -295,6 +294,24 @@ namespace KingIT.Models
         public virtual int sp_upgraddiagrams1()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams1");
+        }
+    
+        public virtual ObjectResult<StatOfTTS_Result> StatOfTTS(Nullable<int> numberTTS)
+        {
+            var numberTTSParameter = numberTTS.HasValue ?
+                new ObjectParameter("numberTTS", numberTTS) :
+                new ObjectParameter("numberTTS", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatOfTTS_Result>("StatOfTTS", numberTTSParameter);
+        }
+    
+        public virtual ObjectResult<StatOfTTS_Result> GetStatOfTTS(Nullable<int> numberTTS)
+        {
+            var numberTTSParameter = numberTTS.HasValue ?
+                new ObjectParameter("numberTTS", numberTTS) :
+                new ObjectParameter("numberTTS", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatOfTTS_Result>("GetStatOfTTS", numberTTSParameter);
         }
     }
 }

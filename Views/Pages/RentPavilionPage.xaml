@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <UniformGrid Columns="2">
             <TextBlock Text="Арендатор" Margin="25"/>
-            <ComboBox ItemsSource="{Binding TenantsCollection}" SelectedItem="{Binding CurrentTenant}" SelectedIndex="0" Margin="25"/>
+            <ComboBox ItemsSource="{Binding TenantsCollection}" SelectedItem="{Binding CurrentTenant}" DisplayMemberPath="tenantName" SelectedIndex="0" Margin="25"/>
             <TextBlock Text="Дата начала" Margin="25"/>
             <DatePicker SelectedDate="{Binding StartDate}"  Margin="25"/>
             <TextBlock Text="Дата конца" Margin="25"/>
