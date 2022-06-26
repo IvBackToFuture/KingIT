@@ -29,7 +29,6 @@ namespace KingIT.Models
                 _context = new KingITEntities();
             return _context;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -41,6 +40,7 @@ namespace KingIT.Models
         public virtual DbSet<ShopCenters> ShopCenters { get; set; }
         public virtual DbSet<Tenants> Tenants { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<log> log { get; set; }
     
         public virtual int AddDateRentThreeYear()
         {

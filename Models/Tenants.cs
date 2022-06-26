@@ -11,7 +11,9 @@ namespace KingIT.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
     public partial class Tenants
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +26,12 @@ namespace KingIT.Models
         public string tenantName { get; set; }
         public string phoneNumber { get; set; }
         public string adress { get; set; }
+        public string AdditionalInfo { get; set; }
+        public JObject JSON
+        {
+            get => (JObject)JsonConvert.DeserializeObject(AdditionalInfo);
+            set => AdditionalInfo = JsonConvert.SerializeObject(value);
+        }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rent> Rent { get; set; }

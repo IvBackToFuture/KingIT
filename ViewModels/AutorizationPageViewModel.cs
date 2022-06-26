@@ -12,7 +12,7 @@ using KingIT.Views.Pages;
 
 namespace KingIT.ViewModels
 {
-    class AutorizationPageViewModel : BaseViewModel
+    public class AutorizationPageViewModel : BaseViewModel
     {
         #region Логин
 
@@ -142,8 +142,8 @@ namespace KingIT.ViewModels
 
         public AutorizationPageViewModel()
         {
-            Login = "Vladlena@gmai.com";
-            Password = "07i7Lb";
+            Login = "Elizor@gmai.com";
+            Password = "yntiRS";
             CountOfPoints = 3;
             CaptchaImage = new System.Windows.Controls.Image() { Width = 350, Height = 80 };
             CaptchaVisibility = System.Windows.Visibility.Hidden;
@@ -169,6 +169,8 @@ namespace KingIT.ViewModels
                         MainWindowViewModel._CurrentViewModel.CurrentPage = new ManagerCPage();
                     if (Employee.employeeRole == "Менеджер А")
                         MainWindowViewModel._CurrentViewModel.CurrentPage = new ManagerAChoosenPage();
+                    if (Employee.employeeRole == "Администратор")
+                        MainWindowViewModel._CurrentViewModel.CurrentPage = new AdministratorPage();
                 }
                 else if (Employee == null)
                     Message = "Неверный логин или пароль";
@@ -184,6 +186,53 @@ namespace KingIT.ViewModels
                 if (CountOfPoints < 1)
                     CaptchaImage.Source = GenerateBitmapImage(CreateImage(350, 80));
             }
+        }
+
+        #endregion
+
+        #region Метод для проверки сложности пароля и вспомогательные методы проверки наличия символов для тестирования
+
+        public static string IsGoodPassword(string passwod)
+        {
+            if (passwod.Length > 20 || passwod.Length < 8)
+                return "Пароль должен иметь длину от 8 до 20 символов";
+            if (!IsHaveNum(passwod))
+                return "Пароль должен содержать в себя хотя бы одну цифру";
+            if (!IsHaveSpecial(passwod))
+                return "Пароль должен содержать в себе хотя бы один спецсимвол";
+            if (!IsHaveOtherWise(passwod))
+                return "Пароль должен иметь как прописные, так и строчные буквы";
+            return "Пароль корректен";
+        }
+
+        private static bool IsHaveNum(string s)
+        {
+            char[] chars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            foreach (char c in chars)
+                if (s.Contains(c))
+                    return true;
+            return false;
+        }
+
+        private static bool IsHaveSpecial(string s)
+        {
+            char[] chars = new char[] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-' };
+            foreach (char c in chars)
+                if (s.Contains(c))
+                    return true;
+            return false;
+        }
+
+        private static bool IsHaveOtherWise(string s)
+        {
+            bool HighB = false, LowB = false;
+            foreach(var c in s)
+            {
+                if (char.IsLower(c)) LowB = true;
+                if (char.IsUpper(c)) HighB = true;
+                if (LowB && HighB) return true;
+            }
+            return false;
         }
 
         #endregion

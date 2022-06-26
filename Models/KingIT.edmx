@@ -20,6 +20,21 @@
           <Property Name="sex" Type="nchar" MaxLength="1" />
           <Property Name="photo" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="LogNumber" />
+          </Key>
+          <Property Name="LogNumber" Type="int" Nullable="false" />
+          <Property Name="CurrentUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="RentID" Type="int" />
+          <Property Name="TenantName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CenterName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PavilionNumber" Type="nvarchar" MaxLength="5" />
+          <Property Name="StatusCenter" Type="nvarchar" MaxLength="20" />
+          <Property Name="RentalStart" Type="date" />
+          <Property Name="RentalEnd" Type="date" />
+        </EntityType>
         <EntityType Name="Pavilions">
           <Key>
             <PropertyRef Name="pavilionNumber" />
@@ -75,9 +90,10 @@
             <PropertyRef Name="tenantNumber" />
           </Key>
           <Property Name="tenantNumber" Type="int" Nullable="false" />
-          <Property Name="tenantName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tenantName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="phoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="adress" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="AdditionalInfo" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Pavilions_ShopCenters">
           <End Role="ShopCenters" Type="Self.ShopCenters" Multiplicity="1" />
@@ -177,6 +193,7 @@
         </Function>
         <EntityContainer Name="Хранилище KingITModelContainer">
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rent" EntityType="Self.Rent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShopCenters" EntityType="Self.ShopCenters" Schema="dbo" store:Type="Tables" />
@@ -270,10 +287,11 @@
             <PropertyRef Name="tenantNumber" />
           </Key>
           <Property Name="tenantNumber" Type="Int32" Nullable="false" />
-          <Property Name="tenantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tenantName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="adress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Rent" Relationship="Self.FK_Rent_Tenants" FromRole="Tenants" ToRole="Rent" />
+          <Property Name="AdditionalInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Rent_Employees">
           <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
@@ -421,11 +439,12 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams1" />
           <FunctionImport Name="StatOfTTS" ReturnType="Collection(KingITModel.StatOfTTS_Result)">
-            <Parameter Name="numberTTS" Mode="In" Type="Int32" />
+          <Parameter Name="numberTTS" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetStatOfTTS" ReturnType="Collection(KingITModel.StatOfTTS_Result)">
-            <Parameter Name="numberTTS" Mode="In" Type="Int32" />
+          <Parameter Name="numberTTS" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="log" EntityType="KingITModel.log" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -468,6 +487,21 @@
           <Property Type="Double" Name="SumAllArea" Nullable="true" />
           <Property Type="Double" Name="AvgOfCostPerSquareMetr" Nullable="true" />
         </ComplexType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="LogNumber" />
+          </Key>
+          <Property Name="LogNumber" Type="Int32" Nullable="false" />
+          <Property Name="CurrentUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RentID" Type="Int32" />
+          <Property Name="TenantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CenterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PavilionNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCenter" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RentalStart" Type="DateTime" Precision="0" />
+          <Property Name="RentalEnd" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -535,6 +569,7 @@
           <EntitySetMapping Name="Tenants">
             <EntityTypeMapping TypeName="KingITModel.Tenants">
               <MappingFragment StoreEntitySet="Tenants">
+                <ScalarProperty Name="AdditionalInfo" ColumnName="AdditionalInfo" />
                 <ScalarProperty Name="tenantNumber" ColumnName="tenantNumber" />
                 <ScalarProperty Name="tenantName" ColumnName="tenantName" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
@@ -607,6 +642,22 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="log">
+            <EntityTypeMapping TypeName="KingITModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="RentalEnd" ColumnName="RentalEnd" />
+                <ScalarProperty Name="RentalStart" ColumnName="RentalStart" />
+                <ScalarProperty Name="StatusCenter" ColumnName="StatusCenter" />
+                <ScalarProperty Name="PavilionNumber" ColumnName="PavilionNumber" />
+                <ScalarProperty Name="CenterName" ColumnName="CenterName" />
+                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+                <ScalarProperty Name="TenantName" ColumnName="TenantName" />
+                <ScalarProperty Name="RentID" ColumnName="RentID" />
+                <ScalarProperty Name="CurrentUser" ColumnName="CurrentUser" />
+                <ScalarProperty Name="LogNumber" ColumnName="LogNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace KingIT.ViewModels
 {
-    class RentPavilionPageViewModel : BaseViewModel
+    public class RentPavilionPageViewModel : BaseViewModel
     {
         #region Даты начала и конца
 
@@ -80,19 +80,30 @@ namespace KingIT.ViewModels
         #region Команда Аренды/Бронирования павильона
 
         public ICommand RentBronePavilionCommand { get; }
-        private bool CanRentBronePavilionCommandExecute(object d) => StopDate >= StartDate;
+        private bool CanRentBronePavilionCommandExecute(object d) => StopDate >= StartDate && StartDate >= DateTime.Today;
         private void OnRentBronePavilionCommandExecuted(object d)
         {
-            bool statusAction = StartDate > DateTime.Today ? true : false;
+            bool statusAction = StartDate > DateTime.Today;
             try
             {
                 KingITEntities.GetContext().RentOrBookPavilionInMall(statusAction, Pavilion.pavilionNumber, Pavilion.shopCenterNumber, StartDate, StopDate, CurrentTenant.tenantNumber, MainWindowViewModel.InsertedEmployee);
-                MessageBox.Show(statusAction == true ? "Арендовано" : "Забронировано");
+                MessageBox.Show(statusAction ? "Забронировано" : "Арендовано");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.InnerException.Message);
             }
+        }
+
+        #endregion
+
+        #region Метод для тестирования
+
+        public static string CheckCanRentBronePavilion(DateTime StartDate, DateTime StopDate)
+        {
+            if (!(StopDate >= StartDate && StartDate >= DateTime.Today))
+                return "Неверный формат ввода даты";
+            return StartDate > DateTime.Today ? "Забронировано" : "Арендовано";
         }
 
         #endregion

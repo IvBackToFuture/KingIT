@@ -15,6 +15,7 @@
         <AssociationConnector Association="KingITModel.FK_Rent_Pavilions" ManuallyRouted="false" />
         <AssociationConnector Association="KingITModel.FK_Rent_Tenants" ManuallyRouted="false" />
         <EntityTypeShape EntityType="KingITModel.sysdiagrams" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="KingITModel.log" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
